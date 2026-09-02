@@ -22,7 +22,6 @@
       --accent-soft: rgba(23, 105, 224, 0.10);
       --shadow: 0 28px 70px rgba(43, 55, 72, 0.14);
       --radius: 22px;
-      --nav-height: 68px;
     }
 
     @media (prefers-color-scheme: dark) {
@@ -60,73 +59,13 @@
     a { color: inherit; }
     button { font: inherit; }
 
-    .site-header {
-      position: sticky;
-      top: 0;
-      z-index: 20;
-      height: var(--nav-height);
-      border-bottom: 1px solid var(--line);
-      background: color-mix(in srgb, var(--bg) 78%, transparent);
-      backdrop-filter: blur(18px) saturate(140%);
-    }
-
-    .nav {
-      width: min(1180px, calc(100% - 40px));
-      height: 100%;
-      margin: 0 auto;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 24px;
-    }
-
-    .brand {
-      display: inline-flex;
-      align-items: center;
-      gap: 11px;
-      text-decoration: none;
-      font-weight: 760;
-      letter-spacing: -0.02em;
-      white-space: nowrap;
-    }
-
-    .brand-mark {
-      width: 28px;
-      height: 28px;
-      display: grid;
-      place-items: center;
-      border-radius: 8px;
-      color: #f8fbff;
-      background: var(--accent-strong);
-      box-shadow: inset 0 1px 0 rgba(255,255,255,0.25);
-      font-size: 14px;
-      font-weight: 850;
-    }
-
-    .nav-links {
-      display: flex;
-      align-items: center;
-      gap: 24px;
-      font-size: 14px;
-      color: var(--muted);
-      white-space: nowrap;
-    }
-
-    .nav-links a {
-      text-decoration: none;
-      transition: color 180ms ease;
-    }
-
-    .nav-links a:hover,
-    .nav-links a:focus-visible { color: var(--text); }
-
     main { overflow: clip; }
 
     .hero {
       width: min(1180px, calc(100% - 40px));
-      min-height: calc(100dvh - var(--nav-height));
+      min-height: 100dvh;
       margin: 0 auto;
-      padding: 72px 0 54px;
+      padding: 52px 0 54px;
       display: grid;
       grid-template-columns: minmax(0, 0.86fr) minmax(480px, 1.14fr);
       align-items: center;
@@ -577,15 +516,13 @@
     }
 
     @media (max-width: 640px) {
-      :root { --nav-height: 62px; --radius: 18px; }
+      :root { --radius: 18px; }
 
-      .nav,
       .hero,
       .section,
       footer { width: min(100% - 28px, 1180px); }
 
-      .nav-links a:first-child { display: none; }
-      .hero { padding: 46px 0 40px; gap: 24px; }
+      .hero { padding: 34px 0 40px; gap: 24px; }
       h1 { font-size: clamp(43px, 14vw, 58px); }
       .hero-art { min-height: 330px; }
       .media-frame { padding: 8px; transform: rotate(0.5deg); }
@@ -618,24 +555,11 @@
     }
 
     @supports not (backdrop-filter: blur(1px)) {
-      .site-header, .source-note { background: var(--surface-solid); }
+      .source-note { background: var(--surface-solid); }
     }
   </style>
 </head>
 <body>
-  <header class="site-header">
-    <nav class="nav" aria-label="主要导航">
-      <a class="brand" href="#top" aria-label="安全下载指南首页">
-        <span class="brand-mark" aria-hidden="true">S</span>
-        <span>安全下载指南</span>
-      </a>
-      <div class="nav-links">
-        <a href="#downloads">下载来源</a>
-        <a href="#safety">下载前确认</a>
-      </div>
-    </nav>
-  </header>
-
   <main id="top">
     <section class="hero">
       <div class="hero-copy reveal">
