@@ -1,0 +1,815 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" media="(prefers-color-scheme: light)" content="#f4f6f8">
+  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0d1117">
+  <meta name="description" content="CC Switch 与 OpenAI Codex 的 GitHub 官方下载来源说明。">
+  <title>安全下载指南 | CC Switch 与 Codex</title>
+  <style>
+    :root {
+      --bg: #f4f6f8;
+      --surface: rgba(255, 255, 255, 0.82);
+      --surface-solid: #ffffff;
+      --surface-muted: #e9edf1;
+      --text: #171a1f;
+      --muted: #5a626e;
+      --line: rgba(23, 26, 31, 0.13);
+      --accent: #1769e0;
+      --accent-strong: #0b54bb;
+      --accent-soft: rgba(23, 105, 224, 0.10);
+      --shadow: 0 28px 70px rgba(43, 55, 72, 0.14);
+      --radius: 22px;
+      --nav-height: 68px;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #0d1117;
+        --surface: rgba(22, 27, 34, 0.84);
+        --surface-solid: #161b22;
+        --surface-muted: #21262d;
+        --text: #f0f3f6;
+        --muted: #9da7b3;
+        --line: rgba(240, 243, 246, 0.13);
+        --accent: #58a6ff;
+        --accent-strong: #1f6feb;
+        --accent-soft: rgba(88, 166, 255, 0.13);
+        --shadow: 0 30px 90px rgba(0, 0, 0, 0.42);
+      }
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      background:
+        radial-gradient(circle at 84% 12%, var(--accent-soft), transparent 28rem),
+        var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: inherit; }
+    button { font: inherit; }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      height: var(--nav-height);
+      border-bottom: 1px solid var(--line);
+      background: color-mix(in srgb, var(--bg) 78%, transparent);
+      backdrop-filter: blur(18px) saturate(140%);
+    }
+
+    .nav {
+      width: min(1180px, calc(100% - 40px));
+      height: 100%;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 11px;
+      text-decoration: none;
+      font-weight: 760;
+      letter-spacing: -0.02em;
+      white-space: nowrap;
+    }
+
+    .brand-mark {
+      width: 28px;
+      height: 28px;
+      display: grid;
+      place-items: center;
+      border-radius: 8px;
+      color: #f8fbff;
+      background: var(--accent-strong);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.25);
+      font-size: 14px;
+      font-weight: 850;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      font-size: 14px;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      transition: color 180ms ease;
+    }
+
+    .nav-links a:hover,
+    .nav-links a:focus-visible { color: var(--text); }
+
+    main { overflow: clip; }
+
+    .hero {
+      width: min(1180px, calc(100% - 40px));
+      min-height: calc(100dvh - var(--nav-height));
+      margin: 0 auto;
+      padding: 72px 0 54px;
+      display: grid;
+      grid-template-columns: minmax(0, 0.86fr) minmax(480px, 1.14fr);
+      align-items: center;
+      gap: clamp(48px, 7vw, 104px);
+    }
+
+    .hero-copy { max-width: 560px; }
+
+    .eyebrow {
+      margin: 0 0 18px;
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 780;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 0;
+      max-width: 10ch;
+      font-size: clamp(48px, 6vw, 76px);
+      line-height: 1.02;
+      letter-spacing: -0.058em;
+      font-weight: 820;
+    }
+
+    .hero-copy > p:not(.eyebrow) {
+      max-width: 31rem;
+      margin: 26px 0 0;
+      color: var(--muted);
+      font-size: clamp(17px, 1.6vw, 20px);
+      line-height: 1.75;
+    }
+
+    .hero-actions {
+      margin-top: 34px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .button {
+      min-height: 48px;
+      padding: 0 20px;
+      border: 1px solid transparent;
+      border-radius: 12px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      color: #f8fbff;
+      background: var(--accent-strong);
+      box-shadow: 0 10px 24px color-mix(in srgb, var(--accent) 22%, transparent);
+      text-decoration: none;
+      font-weight: 720;
+      line-height: 1;
+      cursor: pointer;
+      transition: transform 180ms ease, background 180ms ease, box-shadow 180ms ease;
+      white-space: nowrap;
+    }
+
+    .button:hover { transform: translateY(-2px); }
+    .button:active { transform: translateY(1px) scale(0.985); }
+    .button:focus-visible { outline: 3px solid var(--accent-soft); outline-offset: 3px; }
+
+    .button.secondary {
+      color: var(--text);
+      background: var(--surface);
+      border-color: var(--line);
+      box-shadow: none;
+    }
+
+    .hero-art {
+      position: relative;
+      min-height: 520px;
+      display: grid;
+      place-items: center;
+    }
+
+    .media-frame {
+      position: relative;
+      width: min(100%, 650px);
+      padding: 13px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--surface);
+      box-shadow: var(--shadow), inset 0 1px 0 rgba(255,255,255,0.18);
+      transform: rotate(1.2deg);
+    }
+
+    .media-frame::before {
+      content: "";
+      position: absolute;
+      inset: 22px auto auto 24px;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 13px 0 0 var(--line), 26px 0 0 var(--line);
+      z-index: 2;
+    }
+
+    .media-image {
+      display: block;
+      width: 100%;
+      aspect-ratio: 1.5;
+      object-fit: cover;
+      object-position: top center;
+      border-radius: 13px;
+      background: var(--surface-muted);
+    }
+
+    .codex-float {
+      position: absolute;
+      right: -2%;
+      bottom: 2%;
+      width: min(54%, 330px);
+      padding: 9px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: var(--surface-solid);
+      box-shadow: var(--shadow);
+      transform: rotate(-4deg);
+    }
+
+    .codex-float img {
+      display: block;
+      width: 100%;
+      border-radius: 10px;
+    }
+
+    .source-note {
+      position: absolute;
+      left: -5%;
+      bottom: 9%;
+      max-width: 220px;
+      padding: 15px 17px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: var(--surface);
+      backdrop-filter: blur(16px);
+      box-shadow: 0 18px 50px rgba(28, 39, 55, 0.13);
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.55;
+      transform: rotate(-2deg);
+    }
+
+    .source-note strong {
+      display: block;
+      margin-bottom: 2px;
+      color: var(--text);
+      font-size: 14px;
+    }
+
+    .section {
+      width: min(1180px, calc(100% - 40px));
+      margin: 0 auto;
+      padding: 104px 0;
+    }
+
+    .section-title {
+      margin: 0;
+      max-width: 16ch;
+      font-size: clamp(34px, 4.4vw, 58px);
+      line-height: 1.08;
+      letter-spacing: -0.045em;
+    }
+
+    .section-intro {
+      max-width: 620px;
+      margin: 18px 0 0;
+      color: var(--muted);
+      font-size: 18px;
+    }
+
+    .project-grid {
+      margin-top: 48px;
+      display: grid;
+      grid-template-columns: 1.25fr 0.75fr;
+      gap: 18px;
+      align-items: stretch;
+    }
+
+    .project {
+      position: relative;
+      min-height: 470px;
+      padding: clamp(24px, 4vw, 44px);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--surface-solid);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 22px 60px rgba(29, 42, 59, 0.08);
+    }
+
+    .project.cc { background: linear-gradient(145deg, var(--surface-solid), var(--accent-soft)); }
+
+    .project-kind {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .project h3 {
+      margin: 12px 0 0;
+      font-size: clamp(30px, 3.2vw, 46px);
+      line-height: 1.05;
+      letter-spacing: -0.04em;
+    }
+
+    .project-description {
+      max-width: 42ch;
+      margin: 18px 0 0;
+      color: var(--muted);
+    }
+
+    .project-meta {
+      margin: 22px 0 0;
+      display: flex;
+      gap: 8px 18px;
+      flex-wrap: wrap;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .project-meta span {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+    }
+
+    .project-meta span::before {
+      content: "";
+      width: 14px;
+      height: 1px;
+      background: var(--accent);
+    }
+
+    .project .button {
+      align-self: flex-start;
+      margin-top: auto;
+    }
+
+    .project-visual {
+      position: absolute;
+      right: -13%;
+      bottom: -11%;
+      width: 66%;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      overflow: hidden;
+      background: var(--surface-muted);
+      box-shadow: var(--shadow);
+      transform: rotate(-5deg);
+      pointer-events: none;
+    }
+
+    .project-visual img { display: block; width: 100%; }
+
+    .project.cc .project-description,
+    .project.cc .project-meta,
+    .project.cc .button { max-width: 45%; }
+
+    .project.codex {
+      color: #f1f5f9;
+      background: #151a20;
+      border-color: rgba(255,255,255,0.12);
+    }
+
+    .project.codex .project-kind,
+    .project.codex .project-description,
+    .project.codex .project-meta { color: #aab5c1; }
+
+    .project.codex .button {
+      color: #10141a;
+      background: #f0f3f6;
+      box-shadow: none;
+    }
+
+    .github-mark {
+      position: absolute;
+      right: 34px;
+      bottom: 34px;
+      width: 112px;
+      height: 112px;
+      opacity: 0.14;
+      filter: invert(1);
+    }
+
+    .safety-wrap {
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .safety {
+      display: grid;
+      grid-template-columns: 0.8fr 1.2fr;
+      gap: clamp(48px, 10vw, 150px);
+      align-items: start;
+    }
+
+    .safety-list {
+      display: grid;
+      gap: 0;
+    }
+
+    .safety-item {
+      padding: 26px 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .safety-item:last-child { border-bottom: 0; }
+
+    .safety-item h3 {
+      margin: 0;
+      font-size: 20px;
+      letter-spacing: -0.02em;
+    }
+
+    .safety-item p {
+      margin: 8px 0 0;
+      color: var(--muted);
+    }
+
+    .notice {
+      margin-top: 44px;
+      padding: 22px 24px;
+      border-left: 3px solid var(--accent);
+      border-radius: 0 12px 12px 0;
+      background: var(--accent-soft);
+      color: var(--muted);
+    }
+
+    .notice strong { color: var(--text); }
+
+    footer {
+      width: min(1180px, calc(100% - 40px));
+      margin: 0 auto;
+      padding: 34px 0 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    footer a { color: var(--text); text-underline-offset: 3px; }
+
+    dialog {
+      width: min(520px, calc(100% - 32px));
+      padding: 0;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      color: var(--text);
+      background: var(--surface-solid);
+      box-shadow: 0 40px 120px rgba(0, 0, 0, 0.34);
+    }
+
+    dialog::backdrop {
+      background: rgba(5, 9, 14, 0.58);
+      backdrop-filter: blur(8px);
+    }
+
+    .dialog-body { padding: 30px; }
+
+    .dialog-kicker {
+      margin: 0 0 10px;
+      color: var(--accent);
+      font-size: 13px;
+      font-weight: 750;
+    }
+
+    dialog h2 {
+      margin: 0;
+      font-size: 30px;
+      line-height: 1.15;
+      letter-spacing: -0.035em;
+    }
+
+    .dialog-message {
+      margin: 17px 0 0;
+      color: var(--muted);
+    }
+
+    .destination {
+      margin: 20px 0 0;
+      padding: 15px 16px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: var(--surface-muted);
+      overflow-wrap: anywhere;
+      font-family: ui-monospace, "SFMono-Regular", Consolas, monospace;
+      font-size: 12px;
+      line-height: 1.55;
+    }
+
+    .dialog-actions {
+      padding: 18px 30px 30px;
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+    }
+
+    .dialog-actions .button { margin: 0; }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(18px);
+      transition: opacity 680ms cubic-bezier(.16,1,.3,1), transform 680ms cubic-bezier(.16,1,.3,1);
+    }
+
+    .reveal.visible { opacity: 1; transform: none; }
+
+    .image-shell { position: relative; }
+
+    .image-shell::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      background: linear-gradient(100deg, transparent 15%, rgba(255,255,255,0.30) 46%, transparent 76%);
+      background-size: 220% 100%;
+      animation: shimmer 1.4s infinite;
+      pointer-events: none;
+    }
+
+    .image-shell.loaded::after { display: none; }
+
+    @keyframes shimmer { to { background-position: -220% 0; } }
+
+    @media (max-width: 900px) {
+      .hero {
+        grid-template-columns: 1fr;
+        padding-top: 58px;
+      }
+
+      .hero-copy { max-width: 700px; }
+      h1 { max-width: 12ch; }
+      .hero-art { min-height: 430px; }
+      .project-grid { grid-template-columns: 1fr; }
+      .project.codex { min-height: 400px; }
+      .safety { grid-template-columns: 1fr; gap: 28px; }
+    }
+
+    @media (max-width: 640px) {
+      :root { --nav-height: 62px; --radius: 18px; }
+
+      .nav,
+      .hero,
+      .section,
+      footer { width: min(100% - 28px, 1180px); }
+
+      .nav-links a:first-child { display: none; }
+      .hero { padding: 46px 0 40px; gap: 24px; }
+      h1 { font-size: clamp(43px, 14vw, 58px); }
+      .hero-art { min-height: 330px; }
+      .media-frame { padding: 8px; transform: rotate(0.5deg); }
+      .media-frame::before { display: none; }
+      .codex-float { width: 48%; right: -1%; bottom: 2%; }
+      .source-note { left: 0; bottom: 3%; max-width: 170px; }
+      .section { padding: 76px 0; }
+      .project { min-height: 520px; padding: 26px; }
+      .project.cc .project-description,
+      .project.cc .project-meta,
+      .project.cc .button { max-width: none; }
+      .project-visual { width: 80%; right: -10%; bottom: -4%; }
+      .project.cc .button { margin-top: 28px; }
+      .project.codex { min-height: 420px; }
+      .github-mark { width: 88px; height: 88px; right: 26px; bottom: 26px; }
+      footer { align-items: flex-start; flex-direction: column; }
+      .dialog-actions { flex-direction: column-reverse; }
+      .dialog-actions .button { width: 100%; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+      .reveal { opacity: 1; transform: none; }
+      .media-frame, .codex-float, .source-note, .project-visual { transform: none; }
+    }
+
+    @supports not (backdrop-filter: blur(1px)) {
+      .site-header, .source-note { background: var(--surface-solid); }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <nav class="nav" aria-label="主要导航">
+      <a class="brand" href="#top" aria-label="安全下载指南首页">
+        <span class="brand-mark" aria-hidden="true">S</span>
+        <span>安全下载指南</span>
+      </a>
+      <div class="nav-links">
+        <a href="#downloads">下载来源</a>
+        <a href="#safety">下载前确认</a>
+      </div>
+    </nav>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="hero-copy reveal">
+        <p class="eyebrow">Verified GitHub Sources</p>
+        <h1>从源头下载，少一点风险。</h1>
+        <p>两个项目，两个可信来源。确认后，在新页面查看对应的 GitHub 发布文件。</p>
+        <div class="hero-actions">
+          <a class="button" href="#downloads">选择下载来源 <span aria-hidden="true">↓</span></a>
+          <a class="button secondary" href="#safety">查看安全提示</a>
+        </div>
+      </div>
+
+      <div class="hero-art reveal" aria-label="CC Switch 与 Codex 项目预览">
+        <figure class="media-frame image-shell">
+          <img class="media-image" src="assets/cc-switch-main.png" alt="CC Switch 项目真实界面截图" loading="eager">
+        </figure>
+        <figure class="codex-float image-shell">
+          <img src="assets/codex-repo.png" alt="OpenAI Codex GitHub 仓库预览" loading="eager">
+        </figure>
+        <div class="source-note">
+          <strong>只指向 GitHub</strong>
+          本页面不托管安装包，也不要求登录信息。
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="downloads">
+      <h2 class="section-title reveal">选择你要查看的项目。</h2>
+      <p class="section-intro reveal">点击后会先显示目标地址。确认无误，再在新页面中选择适合你系统的文件。</p>
+
+      <div class="project-grid">
+        <article class="project cc reveal">
+          <p class="project-kind">免费开源桌面工具</p>
+          <h3>CC Switch</h3>
+          <p class="project-description">集中管理 Claude Code、Codex、Gemini CLI 等开发工具的供应商与配置。</p>
+          <div class="project-meta" aria-label="CC Switch 支持信息">
+            <span>Windows</span>
+            <span>macOS</span>
+            <span>Linux</span>
+          </div>
+          <button
+            class="button open-release"
+            type="button"
+            data-project="CC Switch"
+            data-url="https://github.com/farion1231/cc-switch/releases"
+          >打开 CC Switch 发布页 <span aria-hidden="true">↗</span></button>
+          <figure class="project-visual image-shell">
+            <img src="assets/cc-switch-main.png" alt="CC Switch 应用界面" loading="lazy">
+          </figure>
+        </article>
+
+        <article class="project codex reveal">
+          <p class="project-kind">OpenAI 官方仓库</p>
+          <h3>Codex</h3>
+          <p class="project-description">前往 OpenAI 官方发布列表。优先选择标记为 Latest 的稳定版本。</p>
+          <div class="project-meta" aria-label="Codex 来源信息">
+            <span>发布者 openai</span>
+            <span>GitHub Releases</span>
+          </div>
+          <button
+            class="button open-release"
+            type="button"
+            data-project="OpenAI Codex"
+            data-url="https://github.com/openai/codex/releases"
+          >打开 Codex 发布页 <span aria-hidden="true">↗</span></button>
+          <img class="github-mark" src="https://cdn.simpleicons.org/github/ffffff" alt="" aria-hidden="true">
+        </article>
+      </div>
+    </section>
+
+    <div class="safety-wrap" id="safety">
+      <section class="section safety">
+        <div class="reveal">
+          <h2 class="section-title">下载前，确认三件事。</h2>
+          <p class="section-intro">GitHub 发布页包含多个文件。根据设备与系统架构选择，不要从陌生镜像下载安装包。</p>
+          <div class="notice"><strong>重要：</strong>CC Switch 官方声明该软件免费、开源。任何收费或索取登录凭据的同名网站都不是这里推荐的下载来源。</div>
+        </div>
+
+        <div class="safety-list reveal">
+          <article class="safety-item">
+            <h3>先看仓库所有者</h3>
+            <p>CC Switch 应显示 <code>farion1231/cc-switch</code>，Codex 应显示 <code>openai/codex</code>。</p>
+          </article>
+          <article class="safety-item">
+            <h3>再看版本状态</h3>
+            <p>普通用户优先选择 Latest。名称含 alpha 或标记 Pre-release 的版本可能不稳定。</p>
+          </article>
+          <article class="safety-item">
+            <h3>最后匹配系统</h3>
+            <p>根据 Windows、macOS、Linux 以及 arm64、x86_64 等架构选择对应文件。</p>
+          </article>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer>
+    <span>下载说明页，不代理下载，不存储用户信息。</span>
+    <span><a href="https://github.com/farion1231/cc-switch" target="_blank" rel="noopener noreferrer">CC Switch 源码</a>　<a href="https://github.com/openai/codex" target="_blank" rel="noopener noreferrer">Codex 源码</a></span>
+  </footer>
+
+  <dialog id="confirm-dialog" aria-labelledby="dialog-title">
+    <div class="dialog-body">
+      <p class="dialog-kicker">即将离开本页面</p>
+      <h2 id="dialog-title">在新页面查看下载</h2>
+      <p class="dialog-message"><span id="dialog-project">项目</span> 的下载文件将在 GitHub 新页面中展示。请确认目标地址后继续。</p>
+      <div class="destination" id="dialog-url"></div>
+    </div>
+    <div class="dialog-actions">
+      <button class="button secondary" type="button" id="cancel-open">返回</button>
+      <a class="button" id="confirm-open" href="#" target="_blank" rel="noopener noreferrer">打开新页面 <span aria-hidden="true">↗</span></a>
+    </div>
+  </dialog>
+
+  <script>
+    (() => {
+      const dialog = document.getElementById('confirm-dialog');
+      const projectLabel = document.getElementById('dialog-project');
+      const urlLabel = document.getElementById('dialog-url');
+      const confirmButton = document.getElementById('confirm-open');
+      const cancelButton = document.getElementById('cancel-open');
+      let destination = '';
+
+      document.querySelectorAll('.open-release').forEach((button) => {
+        button.addEventListener('click', () => {
+          destination = button.dataset.url || '';
+          projectLabel.textContent = button.dataset.project || '项目';
+          urlLabel.textContent = destination;
+          confirmButton.href = destination;
+          dialog.showModal();
+        });
+      });
+
+      cancelButton.addEventListener('click', () => dialog.close());
+
+      confirmButton.addEventListener('click', (event) => {
+        if (!destination.startsWith('https://github.com/')) {
+          event.preventDefault();
+          return;
+        }
+        dialog.close();
+      });
+
+      dialog.addEventListener('click', (event) => {
+        const bounds = dialog.getBoundingClientRect();
+        const outside = event.clientX < bounds.left || event.clientX > bounds.right || event.clientY < bounds.top || event.clientY > bounds.bottom;
+        if (outside) dialog.close();
+      });
+
+      document.querySelectorAll('.image-shell img').forEach((image) => {
+        const shell = image.closest('.image-shell');
+        const markLoaded = () => shell && shell.classList.add('loaded');
+        if (image.complete) markLoaded();
+        else image.addEventListener('load', markLoaded, { once: true });
+        image.addEventListener('error', () => {
+          markLoaded();
+          image.alt = '图片暂时无法加载';
+        }, { once: true });
+      });
+
+      if ('IntersectionObserver' in window && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('visible');
+              observer.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.16 });
+        document.querySelectorAll('.reveal').forEach((element) => observer.observe(element));
+      } else {
+        document.querySelectorAll('.reveal').forEach((element) => element.classList.add('visible'));
+      }
+    })();
+  </script>
+</body>
+</html>
